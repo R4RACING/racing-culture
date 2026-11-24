@@ -1,0 +1,39 @@
+# 東望洋 · Guia Circuit — Caddy 配置（比 Nginx 更省事，自动申请/续期 HTTPS）
+#
+# 用法：
+#   1. sudo cp deploy/Caddyfile /etc/caddy/Caddyfile
+#   2. 把 guia.example.com 改成你的域名
+#   3. sudo systemctl reload caddy
+#
+# 前提：域名 A 记录已指向服务器；服务器 80/443 端口放行。
+# Caddy 会自动向 Let's Encrypt 申请证书，无需 certbot。
+
+guia.example.com {
+    root * /var/www/guia
+    encode zstd gzip
+
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+    }
+
+    # HTML 不缓存，改完立即生效
+    @html path /index.html /
+    header @html Cache-Control "no-cache"
+
+    # 静态资源长缓存（引用带 ?v= 版本号）
+    @assets path /assets/*
+    header @assets Cache-Control "public, max-age=2592000, immutable"
+
+    file_server
+}
+
+# 没有域名、只想用 IP + HTTP 访问时，用下面这段替代上面整块：
+#
+# :80 {
+#     root * /var/www/guia
+#     encode gzip
+#     file_server
+# }
