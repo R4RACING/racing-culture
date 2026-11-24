@@ -9,7 +9,7 @@
 # Caddy 会自动向 Let's Encrypt 申请证书，无需 certbot。
 
 guia.example.com {
-    root * /var/www/guia
+    root * /var/www/racing-culture
     encode zstd gzip
 
     header {
@@ -33,7 +33,7 @@ guia.example.com {
 # 没有域名、只想用 IP + HTTP 访问时，用下面这段替代上面整块：
 #
 # :80 {
-#     root * /var/www/guia
+#     root * /var/www/racing-culture
 #     encode gzip
 #     file_server
 # }

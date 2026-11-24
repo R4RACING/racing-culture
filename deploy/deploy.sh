@@ -6,13 +6,13 @@
 #   ./deploy/deploy.sh deploy@guia.example.com
 #
 # 可选环境变量：
-#   REMOTE_DIR  远端站点目录（默认 /var/www/guia）
+#   REMOTE_DIR  远端站点目录（默认 /var/www/racing-culture）
 #   SSH_PORT    SSH 端口（默认 22）
 #
 # 前置：本机有 rsync、能免密（或交互输入密码）SSH 登录目标机。
 #
 # 首次部署前，在 VPS 上先建好目录：
-#   sudo mkdir -p /var/www/guia && sudo chown -R "$USER" /var/www/guia
+#   sudo mkdir -p /var/www/racing-culture && sudo chown -R "$USER" /var/www/racing-culture
 
 set -euo pipefail
 
@@ -23,7 +23,7 @@ if [ -z "$TARGET" ]; then
   exit 1
 fi
 
-REMOTE_DIR="${REMOTE_DIR:-/var/www/guia}"
+REMOTE_DIR="${REMOTE_DIR:-/var/www/racing-culture}"
 SSH_PORT="${SSH_PORT:-22}"
 SRC_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
